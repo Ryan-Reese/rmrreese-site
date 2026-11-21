@@ -1,9 +1,24 @@
-body {
-  max-width: 48rem;
-  margin: 2rem auto;
-  padding: 0 1rem;
-  line-height: 1.5;
+@font-face {
+  font-family: "Linux Libertine O";
+  src: url("LinLibertine_R.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
+
+body {
+  box-sizing: border-box;
+  max-width: 42rem;
+  margin: clamp(2rem, 9vw, 7rem) auto 2.5rem;
+  padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+  color: #000;
+  background: #fff;
+  font: 1.0625rem / 1.35 "Linux Libertine O", Georgia, serif;
+  font-variant-numeric: oldstyle-nums;
+}
+
+a { color: #07608f; text-underline-offset: .12em; }
+a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
 
 .skip-link { position: absolute; top: .5rem; left: .5rem; }
 .skip-link:not(:focus) { clip-path: inset(50%); }
@@ -11,15 +26,35 @@ body {
 .profile {
   display: flex;
   align-items: start;
-  gap: clamp(1rem, 4vw, 2rem);
+  gap: clamp(1.5rem, 5vw, 3rem);
 }
 
 .profile-text { flex: 1; min-width: 0; }
-.profile h1 { margin: 0; line-height: 1.2; }
-.profile p { margin: 1rem 0 0; }
-.profile-photo { width: clamp(5rem, 26vw, 8rem); margin: 0; text-align: center; }
+.profile-text a { white-space: nowrap; }
+.profile h1 { margin: 0; font-size: 1.85rem; font-weight: 400; line-height: 1.15; }
+.profile p { margin: .75rem 0 0; text-wrap: balance; }
+.profile h1 + p { margin-top: 1.65rem; }
+.profile-photo { flex: none; width: 8rem; margin: 0; text-align: center; }
 .profile-photo img { display: block; width: 100%; height: auto; }
 .profile-photo figcaption { margin-top: .35rem; font-size: .9rem; }
 
-#cv { margin-top: .65rem; font-size: 1.25rem; font-weight: bold; }
-footer { margin-top: 2rem; font-size: .9rem; }
+#cv { margin-top: 1rem; }
+footer { margin-top: clamp(3rem, 9vw, 6rem); font-size: .9rem; text-align: right; }
+
+@media (max-width: 32rem) {
+  .profile {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: min-content 1fr;
+    gap: 0 1rem;
+  }
+  .profile-text { display: contents; }
+  .profile h1 { grid-area: 1 / 1; }
+  .profile h1 + p { grid-area: 2 / 1; }
+  .profile-photo { grid-area: 1 / 2 / span 2; width: 6rem; }
+  .profile-text p:has(> a[href^="mailto:"]) {
+    grid-column: 1 / -1;
+    font-size: clamp(.8rem, 4vw, 1rem);
+  }
+  #cv { grid-column: 1 / -1; }
+}
